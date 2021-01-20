@@ -1,0 +1,19 @@
+local plr = game:GetService("Players").LocalPlayer
+local hum = plr.Character.HumanoidRootPart
+local mouse = plr:GetMouse()
+--+--
+local speed = 0.25
+--+--
+local mouseconnection
+game:GetService("UserInputService").InputBegan:Connect(function(i,g)
+ if not g and i.KeyCode == Enum.KeyCode.LeftControl then --- the hot key is "LeftControl" You can change it to anything like e or q just aslong as u hold the key you chose it should work
+   mouseconnection = mouse.Button1Down:Connect(function()
+     game:GetService('TweenService'):Create(hum, TweenInfo.new(speed), {CFrame = CFrame.new(mouse.Hit.p + Vector3.new(0,3,0))}):Play()
+   end)
+ end
+end)
+game:GetService("UserInputService").InputEnded:Connect(function(i,g)
+   if i.KeyCode == Enum.KeyCode.LeftControl and mouseconnection then
+      mouseconnection:Disconnect()
+   end
+end)
